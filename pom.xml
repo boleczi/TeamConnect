@@ -11,6 +11,10 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.0.5.RELEASE</version>
 	</parent>
+	<properties>
+		<com.microsoft.sqlserver.version>6.1.0.jre8</com.microsoft.sqlserver.version>
+		<com.fasterxml.jackson.core>2.9.7</com.fasterxml.jackson.core>
+	</properties>
 	<build>
 		<plugins>
 			<plugin>
@@ -21,6 +25,7 @@
 						<id>build-info</id>
 						<goals>
 							<goal>build-info</goal>
+							<goal>repackage</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -49,7 +54,12 @@
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
-			<version>6.1.0.jre8</version>
+		<version>${com.microsoft.sqlserver.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${com.fasterxml.jackson.core}</version>
 		</dependency>
 	</dependencies>
 </project>

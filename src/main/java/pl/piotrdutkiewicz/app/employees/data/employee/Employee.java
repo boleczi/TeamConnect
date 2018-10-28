@@ -1,18 +1,21 @@
 package pl.piotrdutkiewicz.app.employees.data.employee;
 
-import java.sql.Date;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Employee")
-public class Employee {
+public final class Employee {
 
 	private int id;
 	private String name;
 	private String surname;
 	private String position;
 	private String department;
-	//private Date employmentDate;
+	// private Date employmentDate;
 	private int salary;
 
 	@Id
@@ -57,13 +60,13 @@ public class Employee {
 		this.department = department;
 	}
 
-//	public Date getEmploymentDate() {
-//		return employmentDate;
-//	}
-//
-//	public void setEmploymentDate(Date employmentDate) {
-//		this.employmentDate = employmentDate;
-//	}
+	// public Date getEmploymentDate() {
+	// return employmentDate;
+	// }
+	//
+	// public void setEmploymentDate(Date employmentDate) {
+	// this.employmentDate = employmentDate;
+	// }
 
 	public int getSalary() {
 		return salary;
@@ -72,10 +75,10 @@ public class Employee {
 	public void setSalary(int salary) {
 		this.salary = salary;
 	}
-	
-	public String toString(){
-		
-		return name+" "+surname+" "+position+" "+department+" "+" "+salary;
-		
+
+	public String toString() {
+
+		return name + " " + surname + " " + position + " " + department + " " + " " + salary;
+
 	}
 }

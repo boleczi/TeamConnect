@@ -1,23 +1,37 @@
 package pl.piotrdutkiewicz.app.teams.model;
 
-public class Teams {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-	
-	
-	private static int ID;
-	private static char Name;
-	
-	public static int getID() {
-		return ID;
+@Entity
+@Table(name = "Teams")
+public final class Teams {
+
+	private int id;
+	private String name;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public int getId() {
+		return id;
 	}
-	public static void setID(int iD) {
-		ID = iD;
+
+	public void setId(int id) {
+		this.id = id;
 	}
-	public static char getName() {
-		return Name;
+
+	public String getName() {
+		return name;
 	}
-	public static void setName(char name) {
-		Name = name;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	
+
+	public String toString() {
+		return id + " " + name;
+	}
 }
