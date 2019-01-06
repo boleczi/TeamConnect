@@ -9,15 +9,15 @@ import javax.persistence.Table;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import pl.piotrdutkiewicz.teamconnect.MainApp;
+import pl.piotrdutkiewicz.teamconnect.TeamConnectApp;
 
 @Entity
 @Table(name = "Teams")
-public final class Teams {
+public final class Team {
 
 	private int id;
 	private String name;
-	private static final Logger logger = LogManager.getLogger(Teams.class);
+	private static final Logger logger = LogManager.getLogger(Team.class);
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

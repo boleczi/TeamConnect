@@ -13,7 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import io.swagger.annotations.ApiModelProperty;
-import pl.piotrdutkiewicz.teamconnect.data.team.Teams;
+import pl.piotrdutkiewicz.teamconnect.data.team.Team;
 
 @Entity
 @Table(name = "Employee")
@@ -32,7 +32,7 @@ public final class Employee {
 	private Date employmentDate;
 	@ApiModelProperty(notes = "salary")
 	private int salary;
-	private static final Logger logger = LogManager.getLogger(Teams.class);
+	private static final Logger logger = LogManager.getLogger(Team.class);
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

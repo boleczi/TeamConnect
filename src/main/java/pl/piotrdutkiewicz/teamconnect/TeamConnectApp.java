@@ -6,14 +6,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MainApp 
+public class TeamConnectApp 
 {
-	private static final Logger logger = LogManager.getLogger(MainApp.class);
+	private static final Logger logger = LogManager.getLogger(TeamConnectApp.class);
 
     public static void main( String[] args )
     {
     	logger.info("\n main()");
 		logger.debug(" running main()");
-    	SpringApplication.run(MainApp.class, args);    	
+    	SpringApplication.run(TeamConnectApp.class, args);    	
     }
 }
