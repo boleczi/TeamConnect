@@ -1,43 +1,40 @@
 package pl.piotrdutkiewicz.teamconnect.exception;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.http.HttpStatus;
 
-@XmlRootElement
 public class ApiError {
 
-	private HttpStatus status;
-	private String message;
-	private List<String> errors;
+	private final HttpStatus status;
+	private final String message;
+	private final List<String> errors;
+	private final UUID errorID;
 
 	public ApiError(HttpStatus status, String message, List<String> errors) {
-		super();
 		this.status = status;
 		this.message = message;
 		this.errors = errors;
+		this.errorID = UUID.randomUUID();
 	}
 
 	public ApiError(HttpStatus status, String message, String error) {
-		super();
 		this.status = status;
 		this.message = message;
 		this.errors = Arrays.asList(error);
+		this.errorID = UUID.randomUUID();
 	}
 
 	public ApiError(HttpStatus status, String message) {
-		super();
 		this.status = status;
+		this.errors = new ArrayList<>();
 		this.message = message;
-
-	}
-
-	public ApiError(HttpStatus status) {
-		super();
-		this.status = status;
+		this.errorID = UUID.randomUUID();
 	}
 
 	public HttpStatus getStatus() {
@@ -50,6 +47,10 @@ public class ApiError {
 
 	public List<String> getErrors() {
 		return errors;
+	}
+
+	public UUID getErrorID() {
+		return errorID;
 	}
 
 }

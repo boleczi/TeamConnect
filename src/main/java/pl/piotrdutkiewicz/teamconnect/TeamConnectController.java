@@ -1,11 +1,11 @@
 package pl.piotrdutkiewicz.teamconnect;
 
+import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.validator.constraints.Length;
@@ -18,10 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
+import org.springframework.web.servlet.NoHandlerFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.swagger.annotations.Api;
 import javassist.NotFoundException;
 import pl.piotrdutkiewicz.teamconnect.data.employee.Employee;
@@ -29,9 +28,7 @@ import pl.piotrdutkiewicz.teamconnect.data.employee.EmployeeRepository;
 import pl.piotrdutkiewicz.teamconnect.data.team.Team;
 import pl.piotrdutkiewicz.teamconnect.data.team.TeamsRepository;
 import pl.piotrdutkiewicz.teamconnect.exception.ApiError;
-
-
-
+import pl.piotrdutkiewicz.teamconnect.exception.ApiResourceNotFoundException;
 
 @RestController
 @Controller
@@ -56,15 +53,13 @@ public class TeamConnectController {
 	}
 
 	@GetMapping(path = "/employee")
-	public String getEmployeeByName(@RequestParam String name) {
-		Employee employee = employeeRepository.findByName(name);
-		if(employee == null){
-			
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-					convertToJson(new ApiError(HttpStatus.NOT_FOUND, "Employee not found")));
-		}
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getEmployeeByName(@Valid @Length(max = 5) @RequestParam("name") String name)
+			throws ApiResourceNotFoundException {
+		Employee employee = employeeRepository.findByName(name).orElseThrow(() -> ApiResourceNotFoundException.builder()
+				.withMessage("Resource not found").withDetail("For requested parameter employee not exist.").build());
 		logger.debug(" getting employees by name");
-		return convertToJson(employeeRepository.findByName(name));
+		return convertToJson(employee);
 	}
 
 	@GetMapping(path = "/teams")
@@ -75,17 +70,13 @@ public class TeamConnectController {
 
 	@GetMapping(path = "/team")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getTeamByName(@Valid @NotNull @Length(max = 5) @RequestParam("name") String name) {
-		Team team = teamsRepository.findByName(name);
-		if (team == null) {
-
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-					convertToJson(new ApiError(HttpStatus.NOT_FOUND, "Member of the team not found")));
+	public String getTeamByName(@Valid @NotNull @Length(max = 5) @RequestParam("name") String name) 
+		throws ApiResourceNotFoundException {
+			Team team = teamsRepository.findByName(name).orElseThrow(()->ApiResourceNotFoundException.builder()
+					.withMessage("Resource not found").withDetail("For requested parameter team not exist.").build());
+			return convertToJson(team);
 		}
-		logger.debug(" getting employees by name");
-		return convertToJson(team);
 
-	}
 
 	private String convertToJson(Object value) {
 
